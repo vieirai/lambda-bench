@@ -1,7 +1,7 @@
 {
   "main": "dist/index.js",
   "bin": {
-    "dirmanager": "./dist/index.js"
+    "warmup": "./dist/index.js"
   },
   "scripts": {
     "build": "esbuild --bundle src/index.ts --outdir=dist --minify --sourcemap --platform=node"

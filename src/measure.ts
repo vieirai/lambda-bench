@@ -1,7 +1,11 @@
-import { FunctionConfiguration } from "@aws-sdk/client-lambda";
+import {
+  FunctionConfiguration,
+  LastUpdateStatus,
+} from "@aws-sdk/client-lambda";
 import { randomUUID } from "crypto";
 import { readFileSync } from "fs";
 
+import sleep from "./helpers/sleep";
 import { getConfig, invoke, setEnv } from "./lambda";
 
 export interface Measure {
@@ -22,8 +26,23 @@ const measure = async (
   await setEnv({
     functionName,
     region,
-    env: { measureHash: randomUUID(), ...config.Environment.Variables },
+    env: { ...config.Environment.Variables, measureHash: randomUUID() },
   });
+
+  console.log("updated function config.");
+
+  let functionStatus: LastUpdateStatus | string = LastUpdateStatus.InProgress;
+
+  while (functionStatus !== LastUpdateStatus.Successful) {
+    functionStatus = (await getConfig({ functionName, region }))
+      .LastUpdateStatus;
+
+    await sleep(1000);
+
+    console.log("waiting...", functionStatus);
+  }
+
+  console.log("measuring...");
 
   return await Promise.all(
     Array(parallelInvocations).map(() =>
@@ -45,19 +64,21 @@ export default async ({
 
   const results = [];
 
-  for (let i = 0; i < iterations; i++) {
-    results.push(
-      ...(await measure(
-        functionName,
-        event,
-        region,
-        config,
-        parallelInvocations,
-      )),
-    );
+  try {
+    for (let i = 0; i < iterations; i++) {
+      results.push(
+        ...(await measure(
+          functionName,
+          event,
+          region,
+          config,
+          parallelInvocations,
+        )),
+      );
+    }
+
+    console.log("results", { results });
+  } finally {
+    await setEnv({ functionName, region, env: config.Environment.Variables });
   }
-
-  await setEnv({ functionName, region, env: config.Environment.Variables });
-
-  console.log(results);
 };
