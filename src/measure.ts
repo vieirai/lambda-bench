@@ -55,7 +55,7 @@ const measure = async (
   );
 
   spinner.succeed(
-    `Fastest: ${Math.min(
+    `[${iteration}/${iterations}] - Fastest: ${Math.min(
       ...results.map(({ billedDuration }) => billedDuration),
     )}`,
   );
@@ -171,7 +171,7 @@ export default async ({
           region,
           config,
           parallelInvocations,
-          i,
+          i + 1,
           iterations,
         )),
       );

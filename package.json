@@ -15,6 +15,7 @@
     "stats-lite": "^2.2.0"
   },
   "devDependencies": {
+    "@types/stats-lite": "^2.2.1",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/node": "^20.6.1",
     "esbuild": "^0.19.3",
@@ -23,7 +24,8 @@
     "eslint-plugin-jest": "^27.2.3",
     "eslint-plugin-prettier": "^5.0.0",
     "import-sort-style-module": "^6.0.0",
-    "prettier": "^3.0.2"
+    "prettier": "^3.0.2",
+    "typescript": "^5.2.2"
   },
   "prettier": {
     "plugins": [
