@@ -20,10 +20,10 @@ export default async ({ funcName, payload, region }: Invoke) => {
   const logs = Buffer.from(LogResult, "base64").toString();
 
   return {
-    billedDuration: logs.match(/(REPORT.*Billed Duration: )(\d+)/)[2],
-    initDuration: logs.match(/(REPORT.*Init Duration: )(\d+)/)[2],
-    duration: logs.match(/(REPORT.*\tDuration: )(\d+)/)[2],
-    memoryUsed: logs.match(/(REPORT.*Memory Used: )(\d+)/)[2],
+    billedDuration: parseInt(logs.match(/(REPORT.*Billed Duration: )(\d+)/)[2]),
+    initDuration: parseInt(logs.match(/(REPORT.*Init Duration: )(\d+)/)[2]),
+    duration: parseInt(logs.match(/(REPORT.*\tDuration: )(\d+)/)[2]),
+    memoryUsed: parseInt(logs.match(/(REPORT.*Memory Used: )(\d+)/)[2]),
     status: StatusCode,
   };
 };
