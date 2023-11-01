@@ -17,13 +17,19 @@ export default async ({ funcName, payload, region }: Invoke) => {
 
   const { LogResult, StatusCode } = await client.send(command);
 
+  if (!LogResult) throw new Error("Couldn't fetch function logs.");
+
   const logs = Buffer.from(LogResult, "base64").toString();
 
   return {
-    billedDuration: parseInt(logs.match(/(REPORT.*Billed Duration: )(\d+)/)[2]),
-    initDuration: parseInt(logs.match(/(REPORT.*Init Duration: )(\d+)/)[2]),
-    duration: parseInt(logs.match(/(REPORT.*\tDuration: )(\d+)/)[2]),
-    memoryUsed: parseInt(logs.match(/(REPORT.*Memory Used: )(\d+)/)[2]),
+    billedDuration: parseInt(
+      (logs.match(/(REPORT.*Billed Duration: )(\d+)/) || [])[2],
+    ),
+    initDuration: parseInt(
+      (logs.match(/(REPORT.*Init Duration: )(\d+)/) || [])[2],
+    ),
+    duration: parseInt((logs.match(/(REPORT.*\tDuration: )(\d+)/) || [])[2]),
+    memoryUsed: parseInt((logs.match(/(REPORT.*Memory Used: )(\d+)/) || [])[2]),
     status: StatusCode,
   };
 };

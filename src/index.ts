@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import { Command } from "commander";
 
-import measure from "./measure";
+import { lambda } from "./lambda";
 
 const program = new Command();
 
@@ -24,12 +24,16 @@ program
     "5",
   )
   .option(
-    "-p, --parallelInvocations <number>",
+    "-p, --parallel <number>",
     "Number of parallel invocations in each iteration",
     "5",
   )
+  .option(
+    "-d, --dependency <string...>",
+    "Lambda function name of dependencies.",
+  )
   .action(async (name, event, options) => {
-    await measure({ eventPath: event, functionName: name, ...options });
+    await lambda({ eventPath: event, functionName: name, ...options });
   });
 
 program
@@ -47,9 +51,13 @@ program
     "5",
   )
   .option(
-    "-p, --parallelInvocations <number>",
+    "-p, --parallel <number>",
     "Number of parallel invocations in each iteration",
     "5",
+  )
+  .option(
+    "-d, --dependency <string...>",
+    "Lambda function name of dependencies.",
   )
   .action(async (name, url, options) => {
     console.log({ name, url, options });

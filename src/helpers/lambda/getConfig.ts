@@ -5,7 +5,7 @@ import {
 
 export interface GetConfig {
   functionName: string;
-  region: string;
+  region?: string;
 }
 
 export default async ({ functionName, region }: GetConfig) => {
