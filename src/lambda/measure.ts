@@ -23,7 +23,7 @@ export default async ({
 }: Measure) => {
   const spinner = ora(`[${iteration}/${iterations}] - Resetting λ`).start();
 
-  await reset(functionName, region);
+  await Promise.all(dependency.map((name) => reset(name, region)));
 
   spinner.text = `[${iteration}/${iterations}] - Invoking λ`;
 

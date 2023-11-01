@@ -9,9 +9,9 @@ export interface Lambda {
   functionName: string;
   eventPath: string;
   region?: string;
-  parallel?: number;
-  iterations?: number;
-  dependency?: string[];
+  parallel: number;
+  iterations: number;
+  dependency: string[];
 }
 
 export default async ({
@@ -24,6 +24,8 @@ export default async ({
 }: Lambda) => {
   console.info(chalk.black.bgGreen.bold(` λ ${functionName} `));
   const event = JSON.parse(readFileSync(eventPath).toString());
+
+  dependency.push(functionName);
 
   let results = [];
 
@@ -44,6 +46,6 @@ export default async ({
 
     output(results);
   } finally {
-    await finalReset(functionName, region);
+    await Promise.all(dependency.map((name) => finalReset(name, region)));
   }
 };
