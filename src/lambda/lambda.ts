@@ -11,15 +11,15 @@ export interface Lambda {
   region?: string;
   parallel: number;
   iterations: number;
-  dependency: string[];
+  dependency?: string[];
 }
 
 export default async ({
   functionName,
   eventPath,
   region,
-  parallel = 10,
-  iterations = 10,
+  parallel,
+  iterations,
   dependency = [],
 }: Lambda) => {
   console.info(chalk.black.bgGreen.bold(` λ ${functionName} `));

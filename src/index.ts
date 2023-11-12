@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 import { Command } from "commander";
 
+import { apig } from "./apig";
 import { lambda } from "./lambda";
 
 const program = new Command();
@@ -43,7 +44,7 @@ program
   .argument("<url>", "URL to invoke")
   .option("-X, --request <string>", "The request method to use", "GET")
   .option("-H, --header <string...>", "Headers to supply with request.")
-  .option("-d, --data <string>", "Headers to supply with request.")
+  .option("-b, --body <string>", "Headers to supply with request.")
   .option("-r, --region <string>", "AWS region")
   .option(
     "-i, --iterations <number>",
@@ -59,8 +60,13 @@ program
     "-d, --dependency <string...>",
     "Lambda function name of dependencies.",
   )
-  .action(async (name, url, options) => {
-    console.log({ name, url, options });
+  .action(async (name, url, { header = [], ...options }) => {
+    await apig({
+      name,
+      url,
+      headers: Object.fromEntries(header.map((h: string) => h.split(":"))),
+      ...options,
+    });
   });
 
 program.parse();
