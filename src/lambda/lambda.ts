@@ -27,7 +27,7 @@ export default async ({
 
   dependency.push(functionName);
 
-  let results = [];
+  const results = [];
 
   try {
     for (let i = 0; i < iterations; i++) {

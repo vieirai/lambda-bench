@@ -1,10 +1,11 @@
 {
   "main": "dist/index.js",
   "bin": {
-    "warmup": "./dist/index.js"
+    "lb": "./dist/index.js"
   },
   "scripts": {
-    "build": "esbuild --bundle src/index.ts --outdir=dist --minify --sourcemap --platform=node"
+    "build": "esbuild --bundle src/index.ts --outdir=dist --minify --sourcemap --platform=node",
+    "lint": "eslint 'src/**/*.ts' --fix && tsc"
   },
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.413.0",
@@ -16,9 +17,11 @@
     "stats-lite": "^2.2.0"
   },
   "devDependencies": {
-    "@types/stats-lite": "^2.2.1",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/node": "^20.6.1",
+    "@types/stats-lite": "^2.2.1",
+    "@typescript-eslint/parser": "^6.13.2",
+    "bun-types": "^1.0.15",
     "esbuild": "^0.19.3",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
@@ -40,5 +43,14 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "keywords": [
+    "lambda",
+    "benchmark",
+    "cold",
+    "start",
+    "cold-start",
+    "cli",
+    "aws"
+  ]
 }

@@ -43,7 +43,7 @@ export const output = (results: Result[]) => {
   table.push(
     {
       [chalk.bold.blue("Duration")]: [
-        stats.mean(duration),
+        stats.mean(duration).toFixed(3),
         Math.min(...duration),
         Math.max(...duration),
         stats.percentile(duration, 0.99),
@@ -53,7 +53,7 @@ export const output = (results: Result[]) => {
     },
     {
       [chalk.bold.blue("BilledDuration")]: [
-        stats.mean(billedDuration),
+        stats.mean(billedDuration).toFixed(3),
         Math.min(...billedDuration),
         Math.max(...billedDuration),
         stats.percentile(billedDuration, 0.99),
@@ -63,7 +63,7 @@ export const output = (results: Result[]) => {
     },
     {
       [chalk.bold.blue("InitDuration")]: [
-        stats.mean(initDuration),
+        stats.mean(initDuration).toFixed(3),
         Math.min(...initDuration),
         Math.max(...initDuration),
         stats.percentile(initDuration, 0.99),
@@ -73,7 +73,7 @@ export const output = (results: Result[]) => {
     },
     {
       [chalk.bold.blue("MemoryUsed")]: [
-        stats.mean(memoryUsed),
+        stats.mean(memoryUsed).toFixed(3),
         Math.min(...memoryUsed),
         Math.max(...memoryUsed),
         stats.percentile(memoryUsed, 0.99),

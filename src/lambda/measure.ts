@@ -21,11 +21,18 @@ export default async ({
   iterations,
   dependency,
 }: Measure) => {
-  const spinner = ora(`[${iteration}/${iterations}] - Resetting λ`).start();
+  const paddedIteration = String(iteration).padStart(
+    String(iterations).length,
+    "0",
+  );
+
+  const spinner = ora(
+    `[${paddedIteration}/${iterations}] - Resetting λ`,
+  ).start();
 
   await Promise.all(dependency.map((name) => reset(name, region)));
 
-  spinner.text = `[${iteration}/${iterations}] - Invoking λ`;
+  spinner.text = `[${paddedIteration}/${iterations}] - Invoking λ`;
 
   const results = await Promise.all(
     Array.from({ length: parallel }, () =>
@@ -33,10 +40,12 @@ export default async ({
     ),
   );
 
+  const fastest = parallel > 1 ? " Fastest:" : "";
+
   spinner.succeed(
-    `[${iteration}/${iterations}] - Fastest: ${Math.min(
+    `[${paddedIteration}/${iterations}] -${fastest} ${Math.min(
       ...results.map(({ billedDuration }) => billedDuration),
-    )}`,
+    ).toFixed(3)} ⚡`,
   );
 
   return results;
