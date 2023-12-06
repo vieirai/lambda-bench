@@ -1,4 +1,4 @@
-# lambda-measure-cold-start
+# Lambda Bench
 CLI utility for benchmarking lambda cold starts
 
 ![Example](media/lb-lambda.gif)
@@ -11,10 +11,13 @@ Measure cold start times on lambda using `RequestResponse` invocation.
 
 Example commands:
 ```bash
+# simple usage
 $ lb lambda function-name path/event.json
 
+# help
 $ lb lambda help
 
+# other options
 $ lb lambda function-name path/event.json \
   --region us-east-1 \
   --iterations 10 \
@@ -30,10 +33,13 @@ When used in this mode, we measure the HTTP request duration.
 
 Example commands:
 ```bash
+# simple usage
 $ lb apig function-name http://my.example.url
 
+# help
 $ lb apig help
 
+# other options
 $ lb apig function-name http://my.example.url \
   --request POST \
   --header 'header1: value' \

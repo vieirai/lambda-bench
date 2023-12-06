@@ -1,9 +1,15 @@
 {
   "name": "lambda-bench",
+  "version": "1.0.0",
+  "description": "Lambda benchmark CLI",
   "main": "dist/index.js",
   "bin": {
     "lb": "./dist/index.js"
   },
+  "author": "vieirai",
+  "license": "ISC",
+  "repository": "https://github.com/vieirai/lambda-bench",
+  "homepage": "https://github.com/vieirai/lambda-bench#readme",
   "scripts": {
     "build": "esbuild --bundle src/index.ts --outdir=dist --minify --sourcemap --platform=node",
     "lint": "eslint 'src/**/*.ts' --fix && tsc"
