@@ -7,7 +7,7 @@ import { lambda } from "./lambda";
 const program = new Command();
 
 program
-  .name("coldshift")
+  .name("lb")
   .version("1.0.0")
   .description("A CLI for measuring cold start times on a lambda function");
 

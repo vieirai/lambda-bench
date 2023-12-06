@@ -1,4 +1,5 @@
 {
+  "name": "lambda-bench",
   "main": "dist/index.js",
   "bin": {
     "lb": "./dist/index.js"

@@ -1,6 +1,8 @@
 # lambda-measure-cold-start
 CLI utility for benchmarking lambda cold starts
 
+![Example](media/lb-lambda.gif)
+
 ## Usage
 
 ### Lambda event
