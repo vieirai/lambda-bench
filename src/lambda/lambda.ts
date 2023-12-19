@@ -12,6 +12,7 @@ export interface Lambda {
   parallel: number;
   iterations: number;
   dependency?: string[];
+  warm?: boolean;
 }
 
 export default async ({
@@ -21,6 +22,7 @@ export default async ({
   parallel,
   iterations,
   dependency = [],
+  warm = false,
 }: Lambda) => {
   console.info(chalk.black.bgGreen.bold(` λ ${functionName} `));
   const event = JSON.parse(readFileSync(eventPath).toString());
@@ -40,12 +42,14 @@ export default async ({
           iteration: i + 1,
           iterations,
           dependency,
+          warm,
         })),
       );
     }
 
-    output(results);
+    output(results, warm);
   } finally {
-    await Promise.all(dependency.map((name) => finalReset(name, region)));
+    if (!warm)
+      await Promise.all(dependency.map((name) => finalReset(name, region)));
   }
 };

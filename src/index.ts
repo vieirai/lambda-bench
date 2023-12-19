@@ -33,8 +33,29 @@ program
     "-d, --dependency <string...>",
     "Lambda function name of dependencies.",
   )
+  .option("-w, --warm", "Measure warm invocations.")
   .action(async (name, event, options) => {
     await lambda({ eventPath: event, functionName: name, ...options });
+  });
+
+program
+  .command("memory")
+  .description("Benchmark lambda with different memory settings.")
+  .argument("<name>", "Lambda function name")
+  .argument("<event>", "Path to event JSON file")
+  .option("-r, --region <string>", "AWS region")
+  .option(
+    "-i, --iterations <number>",
+    "Number of iterations to test cold starts",
+    "5",
+  )
+  .option(
+    "-p, --parallel <number>",
+    "Number of parallel invocations in each iteration",
+    "5",
+  )
+  .action(async (name, event, options) => {
+    console.log(name, event, options);
   });
 
 program

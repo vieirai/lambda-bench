@@ -23,7 +23,8 @@ $ lb lambda function-name path/event.json \
   --iterations 10 \
   --parallel 1 \
   --dependency function-name-1 \
-  --dependency function-name-2
+  --dependency function-name-2 \
+  --warm # to measure warm invocations
 ```
 
 ### API Gateway event
